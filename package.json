@@ -1,0 +1,37 @@
+{
+  "name": "coinpit-index",
+  "version": "0.1.1",
+  "description": "External spot price use by coinpit futures exchange",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha specs/*"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/coinpit/coinpit-index.git"
+  },
+  "keywords": [
+    "coinpit",
+    "spot",
+    "index"
+  ],
+  "author": "coinpit",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/coinpit/coinpit-index/issues"
+  },
+  "homepage": "https://github.com/coinpit/coinpit-index#readme",
+  "devDependencies": {
+    "expect.js": "^0.3.1",
+    "mocha": "^3.0.2"
+  },
+  "dependencies": {
+    "affirm.js": "^1.0.0",
+    "lodash": "^4.15.0",
+    "mangler": "^1.0.3",
+    "median": "0.0.2",
+    "microtime.js": "^1.0.0",
+    "pusher-client": "^1.1.0",
+    "ws": "^1.1.1"
+  }
+}
