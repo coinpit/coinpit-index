@@ -1,7 +1,8 @@
 # coinpit-index
 This module listens to BTC/USD spot prices from different exchanges. (currently supported providers: Bitfinex, OKCoin, BitStamp)
 
-## install: npm intsall coinpit-index --save
+## install: 
+npm install coinpit-index --save
 
 ## usage
 
