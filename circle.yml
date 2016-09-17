@@ -1,7 +1,18 @@
 machine:
   node:
     version: 4.0.0
+  services:
+    - docker
 
 test:
   override:
     - npm test
+    - gulp build
+
+deployment:
+  hub:
+    commands:
+      - docker info
+      - docker build -t coinpit/coinpit-index .
+      - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
+      - docker push coinpit/coinpit-index

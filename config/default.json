@@ -1,0 +1,8 @@
+{
+  "feed"                : ["bitfinex", "bitstamp", "okcoin","coinbase", "poloniex"],
+  "minExternalProviders": 1,
+  "ticksize"            : 1,
+  "logExternalPrice"    : true,
+  "expiryTime"          : 15,
+  "port"                : 8090
+}

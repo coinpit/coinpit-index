@@ -1,17 +1,17 @@
 module.exports = function () {
   var util    = require('util')
-  var time    = require('microtime.js')
-  var Emitter   = require('events').EventEmitter;
-  var emitter   = new Emitter();
-  var feeder = {}
+  var config  = require('config')
+  var Emitter = require('events').EventEmitter;
+  var emitter = new Emitter();
+  var feeder  = {}
   feeder.on   = emitter.on.bind(emitter)
   feeder.once = emitter.once.bind(emitter)
-  
+
   var currentPrice, timer
 
   feeder.resetClockToClearPrice = function () {
     if (timer) clearTimeout(timer)
-    timer = setTimeout(feeder.clearPrice.bind(feeder), time.minToMilli(15))
+    timer = setTimeout(feeder.clearPrice.bind(feeder), config.expiryTime * 60 * 1000)
   }
 
   feeder.heartbeat = function () {
@@ -19,13 +19,13 @@ module.exports = function () {
   }
 
   feeder.priceReceived = function (price) {
-    price = price - 0
+    price        = price - 0
     currentPrice = price && !isNaN(price) ? price : undefined;
     emitter.emit('price', currentPrice)
     feeder.resetClockToClearPrice()
   }
 
-  feeder.clearPrice  = function() {
+  feeder.clearPrice = function () {
     currentPrice = undefined
     emitter.emit('price', undefined)
   }
