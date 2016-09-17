@@ -10,8 +10,10 @@ test:
     - gulp build
 
 deployment:
-  commands:
-    - docker info
-    - docker build -t coinpit/coinpit-index .
-    - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
-    - docker push coinpit/coinpit-index
+  hub:
+    branch: master
+    commands:
+      - docker info
+      - docker build -t coinpit/coinpit-index .
+      - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
+      - docker push coinpit/coinpit-index
