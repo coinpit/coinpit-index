@@ -1,12 +1,15 @@
 module.exports = (function () {
-  var WebSocket = require('ws');
-  var util      = require('util')
-  var affirm    = require('affirm.js')
-  var okcoin    = require('./feeder')('okcoin')
-
+  var WebSocket    = require('ws');
+  var util         = require('util')
+  var affirm       = require('affirm.js')
+  var okcoin       = require('./feeder')('okcoin')
+  var ws
+  okcoin.reconnect = function () {
+    require('./wsReconnect').reconnect(ws, init)
+  }
   function init() {
     try {
-      var ws = new WebSocket("wss://real.okcoin.com:10440/websocket/okcoinapi");
+      ws = new WebSocket("wss://real.okcoin.com:10440/websocket/okcoinapi");
       ws.on('open', function open() {
         try {
           util.log('okcoin: connected')
@@ -16,7 +19,9 @@ module.exports = (function () {
           console.log(e)
         }
       });
-
+      ws.on('error', function (e) {
+        console.log('coinbase connection failure.', e)
+      })
       ws.onmessage = function (msg) {
         try {
           var message = JSON.parse(msg.data)

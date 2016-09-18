@@ -2,11 +2,16 @@ module.exports = (function () {
   var autobahn = require('autobahn');
   var poloniex = require('./feeder')('poloniex')
 
+  poloniex.reconnect = function () {
+    // require('./wsReconnect').reconnect(ws, init)
+  }
+
   function init() {
     try {
       var connection     = new autobahn.Connection({
-        url  : "wss://api.poloniex.com",
-        realm: "realm1"
+        url        : "wss://api.poloniex.com",
+        realm      : "realm1",
+        max_retries: -1
       });
       connection.onopen  = function (session) {
         console.log('poloniex connected')

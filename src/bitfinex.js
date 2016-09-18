@@ -3,11 +3,16 @@ module.exports = (function () {
   var util      = require('util')
   var affirm    = require('affirm.js')
   var channel
-  var bitfinex = require('./feeder')('bitfinex')
+  var bitfinex  = require('./feeder')('bitfinex')
+  var ws
+
+  bitfinex.reconnect = function () {
+    require('./wsReconnect').reconnect(ws, init)
+  }
 
   function init() {
     try {
-      var ws = new WebSocket("wss://api2.bitfinex.com:3000/ws");
+      ws = new WebSocket("wss://api2.bitfinex.com:3000/ws");
       ws.on('open', function open() {
         try {
           util.log('bitfinex: connected')
@@ -17,7 +22,9 @@ module.exports = (function () {
           console.log(e)
         }
       });
-
+      ws.on('error', function (e) {
+        console.log('bitfinex connection failure', e)
+      })
       ws.onmessage = function (msg) {
         try {
           var message = JSON.parse(msg.data)

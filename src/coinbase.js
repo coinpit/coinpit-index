@@ -1,11 +1,15 @@
 module.exports = (function () {
-  var WebSocket = require('ws');
-  var util      = require('util')
-  var coinbase  = require('./feeder')('coinbase')
+  var WebSocket      = require('ws');
+  var util           = require('util')
+  var coinbase       = require('./feeder')('coinbase')
+  var ws
+  coinbase.reconnect = function () {
+    require('./wsReconnect').reconnect(ws, init)
+  }
 
   function init() {
     try {
-      var ws = new WebSocket("wss://ws-feed.gdax.com");
+      ws = new WebSocket("wss://ws-feed.gdax.com");
       ws.on('open', function open() {
         try {
           util.log('coinbase: connected')
@@ -18,11 +22,13 @@ module.exports = (function () {
           console.log(e)
         }
       });
-
+      ws.on('error', function (e) {
+        console.log('coinbase connection failure.', e)
+      })
       ws.onmessage = function (msg) {
         try {
           var message = JSON.parse(msg.data)
-          if(message.type !== 'match') return
+          if (message.type !== 'match') return
           coinbase.priceReceived(message.price)
         } catch (e) {
           console.log(e)

@@ -4,8 +4,18 @@ module.exports = (function () {
   var pusher, lastTime = Date.now()
   var bitstamp         = require('./feeder')('bitstamp')
 
-  function reconnect() {
-    if(pusher) pusher.disconnect()
+  bitstamp.reconnect = function () {
+    init()
+  }
+
+  function init() {
+    if (pusher){
+      var state = pusher.connection.state
+      console.log('###### bitstamp status', state)
+      if(state === 'unavailable' || state === 'failed' || state === 'disconnected')
+        pusher.disconnect()
+      else return
+    }
     pusher = new Pusher('de504dc5763aeef9ff52')
     pusher.connection.bind('error', function (err) {
       console.log('PUSHER ERR', err)
@@ -23,13 +33,6 @@ module.exports = (function () {
     }))
   }
 
-  setInterval(function () {
-    if (Date.now() - lastTime > 150000) {
-      console.log('Reconnecting to bitstamp')
-      reconnect()
-    }
-  }, 300000)
-
-  reconnect()
+  init()
   return bitstamp
 })()
