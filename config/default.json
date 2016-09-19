@@ -1,5 +1,5 @@
 {
-  "feed"                : ["bitfinex", "bitstamp", "okcoin","coinbase", "poloniex"],
+  "feed"                : ["bitfinex", "bitstamp", "okcoin","coinbase", "poloniex", "gemini"],
   "minExternalProviders": 1,
   "ticksize"            : 1,
   "logExternalPrice"    : true,
