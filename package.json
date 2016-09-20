@@ -32,7 +32,8 @@
     "gulp-nsp": "^2.4.2",
     "gulp-util": "^3.0.7",
     "jshint": "^2.9.3",
-    "mocha": "^3.0.2"
+    "mocha": "^3.0.2",
+    "sinon": "^1.17.6"
   },
   "dependencies": {
     "affirm.js": "^1.0.0",

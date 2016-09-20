@@ -5,7 +5,7 @@
   "bandUpperLimit"      : 2,
   "bandLowerLimit"      : 2,
   "logExternalPrice"    : true,
-  "expiryTime"          : 15,
+  "expiryTime"          : 1,
   "port"                : 8090,
   "test"                : true
 }
