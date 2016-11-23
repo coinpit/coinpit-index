@@ -10,7 +10,7 @@ npm install coinpit-index --save
 var config = {
     feed                : ["bitfinex", "bitstamp", "okcoin"], 
     minExternalProviders: 1, // if less than 1 provider, band will return undefined
-    ticksize            : 1, // up to 1 decimal place
+    ticksize            : 3, // up to 3 decimal place
     bandUpperLimit      : 2, // upper limit on the band from the median external price
     bandLowerLimit      : 2, // lower limit on the band from the median external price
     logExternalPrice    : true // logs price, min and max

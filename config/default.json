@@ -1,7 +1,7 @@
 {
   "feed"                : ["bitfinex", "bitstamp", "okcoin","coinbase", "gemini"],
   "minExternalProviders": 1,
-  "ticksize"            : 1,
+  "ticksize"            : 3,
   "logExternalPrice"    : true,
   "expiryTime"          : 5,
   "port"                : 8090
