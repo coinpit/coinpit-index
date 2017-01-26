@@ -4,7 +4,8 @@
   "description": "External spot price use by coinpit futures exchange",
   "main": "index.js",
   "scripts": {
-    "test": "NODE_ENV=test gulp test"
+    "test": "NODE_ENV=test gulp test",
+    "start":"node src/index.js"
   },
   "repository": {
     "type": "git",

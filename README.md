@@ -1,31 +1,49 @@
 # coinpit-index
 This module listens to BTC/USD spot prices from different exchanges. (currently supported providers: Bitfinex, OKCoin, BitStamp)
 
-## install: 
-npm install coinpit-index --save
-
 ## usage
 
-```javascript
-var config = {
-    feed                : ["bitfinex", "bitstamp", "okcoin"], 
-    minExternalProviders: 1, // if less than 1 provider, band will return undefined
-    ticksize            : 3, // up to 3 decimal place
-    bandUpperLimit      : 2, // upper limit on the band from the median external price
-    bandLowerLimit      : 2, // lower limit on the band from the median external price
-    logExternalPrice    : true // logs price, min and max
-}
+ Module can be started in 2 ways:
 
-var coinpitIndex = yield require('coinpit-index')(config)
+####1. Run as nodejs server
+```bash
+git clone coinpit-index
+// modify port in coinpit-index/config/default.json
+cd coinpit-index
+npm install
+npm start
+```
 
-// returns current external spot price band. {price:<price>, max:<max>, min:<min>
-var band = feed.getBand() 
 
-// listen to coinpitIndex when externalSpotPrice changes.
-coinpitIndex.on('price', function(band){
-    var externalSpotPrice = band.price
-    var upperLimitSpotPrice = band.max
-    var lowerLimitSpotPrice = band.min
-)
+####2. Run as docker image
+```
+docker run --restart=always -d --name cpindex -p $INT_IP:8090:8090 \
+              -e BLUEBIRD_DEBUG=1 -e NODE_CONFIG_DIR=./dist/config \
+              coinpit/coinpit-index
+```
+
+#### Get Index prices on client
+
+Index prices will be emitted on socket with channel "coinpit-index#BTCUSD"
 
 ```
+var socket = require('socket.io-client')
+var io     = socket('http://localhost:8090')
+io.on('coinpit-index#BTCUSD', function(data){
+    console.log(data)
+})
+
+/*
+output:
+{ price: 900.02,
+  lastProvider: 'okcoin',
+  used: 5,
+  providers:
+   { gemini: { price: 901.55, time: 1485402295232 },
+     okcoin: { price: 899.3, time: 1485402327813 },
+     bitstamp: { price: 898.69, time: 1485402295729 },
+     coinbase: { price: 904.32, time: 1485402319819 },
+     bitfinex: { price: 900.02, time: 1485402327417 } } }
+*/
+```
+
