@@ -7,7 +7,7 @@ This module listens to BTC/USD spot prices from different exchanges. (currently 
 
 ####1. Run as nodejs server
 ```bash
-git clone coinpit-index
+https://github.com/coinpit/coinpit-index
 // modify port in coinpit-index/config/default.json
 cd coinpit-index
 npm install
