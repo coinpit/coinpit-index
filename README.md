@@ -1,5 +1,5 @@
 # coinpit-index
-This module listens to BTC/USD spot prices from different exchanges. (currently supported providers: Bitfinex, OKCoin, BitStamp)
+This module listens to BTC/USD spot prices from different exchanges. (currently supported providers: Bitfinex, OKCoin, BitStamp, Gemini, Coinbase)
 
 ## usage
 
