@@ -17,9 +17,7 @@ npm start
 
 ####2. Run as docker image
 ```
-docker run --restart=always -d --name cpindex -p 8090:8090 \
-              -e BLUEBIRD_DEBUG=1 -e NODE_CONFIG_DIR=./dist/config \
-              coinpit/coinpit-index
+docker run --restart=always -d --name cpindex -p 8090:8090 coinpit/coinpit-index
 ```
 
 #### Get Index prices on client
