@@ -9,6 +9,7 @@ module.exports = (function(){
           break;
         case WebSocket.CLOSED:
         case WebSocket.CLOSING:
+        default:
           init()
       }
     } else{

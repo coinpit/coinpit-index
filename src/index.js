@@ -20,11 +20,16 @@ module.exports = (function () {
     })
 
     if (!config.test) {
-      io  = require('socket.io')(config.port);
+      io = require('socket.io')(config.port);
       io.on('connection', function (socket) {
         socket.emit(TOPIC, index)
       })
     }
+    process.on('uncaughtException', (err) => {
+      console.log("################################## uncaught exception ######################################")
+      util.log(err.stack)
+      console.log("################################## uncaught exception ######################################")
+    })
   }
 
   function priceChanged(feedProvider) {
@@ -36,7 +41,7 @@ module.exports = (function () {
     })
     // externalPrice = list.length === 0 ? undefined : median(list).toFixed(config.ticksize) - 0
     var price = list.length < config.minExternalProviders ? undefined : median(list).toFixed(config.ticksize) - 0
-    index     = { price: price, lastProvider: feedProvider, used:list.length, providers: prices }
+    index     = { price: price, lastProvider: feedProvider, used: list.length, providers: prices }
     if (config.logExternalPrice) util.log('coinpit-index:', JSON.stringify(index))
     if (io) io.emit(TOPIC, index)
   }
@@ -48,7 +53,7 @@ module.exports = (function () {
   feed.getIndex = function () {
     return index
   }
-  feed.reset = function(){
+  feed.reset    = function () {
     index = {}
   }
   init()

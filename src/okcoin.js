@@ -20,7 +20,7 @@ module.exports = (function () {
         }
       });
       ws.on('error', function (e) {
-        console.log('coinbase connection failure.', e)
+        console.log('okcoin connection failure.', e)
       })
       ws.onmessage = function (msg) {
         try {
