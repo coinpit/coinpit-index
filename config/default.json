@@ -1,6 +1,6 @@
 {
   "feed"                : ["bitfinex", "bitstamp", "okcoin","coinbase", "gemini"],
-  "minExternalProviders": 1,
+  "minExternalProviders": 3,
   "ticksize"            : 3,
   "logExternalPrice"    : true,
   "expiryTime"          : 5,

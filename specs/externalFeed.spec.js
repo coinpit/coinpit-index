@@ -1,16 +1,18 @@
 var expect   = require('expect.js')
 var mockFeed = require('../src/mockProvider')
-var feed     = require("../src/index")
+var feed
 var sinon    = require('sinon')
 var config   = require('config')
 var clock
 describe('External Feed test', function () {
 
   before(function () {
+
   })
   beforeEach(function () {
-    feed.reset()
     clock = sinon.useFakeTimers();
+    feed = require("../src/index")
+    feed.reset()
   })
 
   afterEach(function () {
