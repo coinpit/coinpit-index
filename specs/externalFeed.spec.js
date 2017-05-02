@@ -42,8 +42,7 @@ describe('External Feed test', function () {
                             })
   })
 
-  it('feed expired', function* () {
-
+  it.skip('feed expired', function* () {
     feed.components['mock1'].priceReceived(10.2)
     clock.tick(config.expiryTime * MINUTE + config.startupDelay + 1)
     yield bluebird.delay(1)
