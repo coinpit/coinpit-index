@@ -36,11 +36,7 @@ describe('Coinpit Index', function() {
 
   it('should return price from REST if socket is unconnected', function*() {
     var feed = IndexCore(fixtures.unconnected)
-    var price = feed.getIndex()
-    for(var i = 0; !price.price && i < 10; i++) {
-      price = feed.getIndex()
-      yield bluebird.delay(10)
-    }
+    yield bluebird.delay(5)
     var price = feed.getIndex()
     expect(price.price).to.equal(fixtures.connected.price)
   })
