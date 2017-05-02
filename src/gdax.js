@@ -1,9 +1,9 @@
 module.exports = (function () {
-  var WebSocket      = require('ws');
-  var util           = require('util')
-  var coinbase       = require('./feeder')('coinbase')
+  var WebSocket = require('ws');
+  var util      = require('util')
+  var gdax      = require('./feeder')('gdax')
   var ws
-  coinbase.reconnect = function () {
+  gdax.reconnect = function () {
     require('./wsReconnect').reconnect(ws, init)
   }
 
@@ -12,33 +12,33 @@ module.exports = (function () {
       ws = new WebSocket("wss://ws-feed.gdax.com");
       ws.on('open', function open() {
         try {
-          util.log('coinbase: connected')
+          util.log('gdax: connected')
           var subscriptionMessage = {
             "type"      : "subscribe",
             "product_id": "BTC-USD"
           }
           ws.send(JSON.stringify(subscriptionMessage))
         } catch (e) {
-          console.log(e)
+          util.log(e)
         }
       });
       ws.on('error', function (e) {
-        console.log('coinbase connection failure.', e)
+        util.log('gdax connection failure.', e)
       })
       ws.onmessage = function (msg) {
         try {
           var message = JSON.parse(msg.data)
           if (message.type !== 'match') return
-          coinbase.priceReceived(message.price)
+          gdax.priceReceived(message.price)
         } catch (e) {
-          console.log(e)
+          util.log(e)
         }
       }
     } catch (e) {
-      console.log(e)
+      util.log(e)
     }
   }
 
   init()
-  return coinbase
-})()
+  return gdax
+})

@@ -3,24 +3,25 @@ var affirm   = require('affirm.js')
 var url      = require('url')
 var util     = require('util')
 var bluebird = require('bluebird')
+var _        = require('lodash')
 
-module.exports = function (providerUrl, path) {
-  affirm(providerUrl && url.parse(providerUrl), 'Invalid provider url')
-  affirm(path && Array.isArray(path), 'path must be an array')
+module.exports = function (restProvider) {
+  var index = _.assign({}, restProvider)
+  affirm(index.url && url.parse(index.url), 'Invalid provider url')
+  affirm(index.path && Array.isArray(index.path), 'path must be an array')
 
-  var index      = {}
   index.getPrice = bluebird.coroutine(function*() {
     try {
-      var response = yield rest.get(providerUrl)
+      var response = yield rest.get(index.url)
       affirm(response && response.body, 'Invalid response: ' + response.statusCode)
       var data = response.body
       if (typeof data === 'string') data = JSON.parse(data)
-      var price = getPriceUsingPath(data, path) - 0
+      var price = getPriceUsingPath(data, index.path) - 0
       affirm(!isNaN(price) && price !== Infinity && price !== null && price > 0, 'Invalid price[' + price + "]")
       return price
     } catch (e) {
       util.log(e.stack)
-      // todo: error handling
+      return undefined
     }
   })
 

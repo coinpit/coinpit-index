@@ -14,7 +14,7 @@ module.exports = (function () {
         max_retries: -1
       });
       connection.onopen  = function (session) {
-        console.log('poloniex connected')
+        util.log('poloniex connected')
         session.subscribe('ticker', function tickerEvent(ticker) {
           if (ticker[0] === 'USDT_BTC') {
             poloniex.priceReceived(ticker[1])
@@ -22,14 +22,14 @@ module.exports = (function () {
         });
       }
       connection.onclose = function () {
-        console.log("Websocket connection closed");
+        util.log("Websocket connection closed");
       }
       connection.open();
     } catch (e) {
-      console.log(e)
+      util.log(e)
     }
   }
 
   init()
   return poloniex
-})()
+})

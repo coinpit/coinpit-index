@@ -1,4 +1,4 @@
-module.exports = (function () {
+module.exports = function () {
   var WebSocket = require('ws');
   var util      = require('util')
   var affirm    = require('affirm.js')
@@ -19,11 +19,11 @@ module.exports = (function () {
           var subscriptionMessage = { "event": "subscribe", "channel": "trades", "pair": "BTCUSD" }
           ws.send(JSON.stringify(subscriptionMessage))
         } catch (e) {
-          console.log(e)
+          util.log(e)
         }
       });
       ws.on('error', function (e) {
-        console.log('bitfinex connection failure', e)
+        util.log('bitfinex connection failure', e)
       })
       ws.onmessage = function (msg) {
         try {
@@ -36,11 +36,11 @@ module.exports = (function () {
             updateCurrentPrice(message)
           }
         } catch (e) {
-          console.log(e)
+          util.log(e)
         }
       }
     } catch (e) {
-      console.log(e)
+      util.log(e)
     }
   }
 
@@ -52,4 +52,4 @@ module.exports = (function () {
 
   init()
   return bitfinex
-})()
+}

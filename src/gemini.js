@@ -25,30 +25,30 @@ module.exports = (function () {
         try {
           util.log('gemini: connected')
         } catch (e) {
-          console.log(e)
+          util.log(e)
         }
       });
       ws.on('error', function (e) {
-        console.log('gemini connection failure', e)
+        util.log('gemini connection failure', e)
       })
       ws.onmessage = function (msg) {
         try {
           var message = JSON.parse(msg.data)
-          // console.log(JSON.stringify(message))
+          // util.log(JSON.stringify(message))
           message.events.forEach(event => {
             if (event.type === 'trade') {
               gemini.priceReceived(event.price)
             }
           })
         } catch (e) {
-          console.log(e)
+          util.log(e)
         }
       }
     } catch (e) {
-      console.log(e)
+      util.log(e)
     }
   }
 
   init()
   return gemini
-})()
+})

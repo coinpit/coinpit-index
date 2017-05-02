@@ -11,18 +11,18 @@ module.exports = (function () {
   function init() {
     if (pusher){
       var state = pusher.connection.state
-      console.log('###### bitstamp status', state)
+      util.log('###### bitstamp status', state)
       if(state === 'unavailable' || state === 'failed' || state === 'disconnected')
         pusher.disconnect()
       else return
     }
     pusher = new Pusher('de504dc5763aeef9ff52')
     pusher.connection.bind('error', function (err) {
-      console.log('PUSHER ERR', err)
+      util.log('PUSHER ERR', err)
     })
 
     pusher.connection.bind('disconnected', function (err) {
-      console.log('PUSHER DISCONNECT', err)
+      util.log('PUSHER DISCONNECT', err)
     })
 
     var channel = pusher.subscribe('live_trades')
@@ -35,4 +35,4 @@ module.exports = (function () {
 
   init()
   return bitstamp
-})()
+})

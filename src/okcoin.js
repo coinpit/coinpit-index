@@ -16,11 +16,11 @@ module.exports = (function () {
           var subscriptionMessage = { 'event': 'addChannel', 'channel': 'ok_sub_spotusd_btc_ticker' }
           ws.send(JSON.stringify(subscriptionMessage))
         } catch (e) {
-          console.log(e)
+          util.log(e)
         }
       });
       ws.on('error', function (e) {
-        console.log('okcoin connection failure.', e)
+        util.log('okcoin connection failure.', e)
       })
       ws.onmessage = function (msg) {
         try {
@@ -29,14 +29,14 @@ module.exports = (function () {
           if (message[0].success === 'true') util.log('okcoin: subscribed to trades')
           if (message[0].data) okcoin.priceReceived(message[0].data.last)
         } catch (e) {
-          console.log(e)
+          util.log(e)
         }
       }
     } catch (e) {
-      console.log(e)
+      util.log(e)
     }
   }
 
   init()
   return okcoin
-})()
+})

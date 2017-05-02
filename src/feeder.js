@@ -33,6 +33,7 @@ module.exports = function (name) {
 
   feeder.clearPrice = function () {
     feed.expired = true
+    util.log('clearPrice', feed)
     emitter.emit('price', feed)
   }
 
@@ -42,7 +43,7 @@ module.exports = function (name) {
 
   setInterval(function () {
     if (Date.now() - lastTime > 150000) {
-      console.log('Reconnecting', name)
+      util.log('Reconnecting', name)
       feeder.reconnect()
     }
   }, 100000)

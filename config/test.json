@@ -1,5 +1,4 @@
 {
-  "feed"                : ["mockProvider"],
   "minExternalProviders": 1,
   "ticksize"            : 1,
   "bandUpperLimit"      : 2,
@@ -7,5 +6,11 @@
   "logExternalPrice"    : true,
   "expiryTime"          : 1,
   "port"                : 8090,
-  "test"                : true
+  "test"                : true,
+  "components":[
+    {
+      "name":"mock1",
+      "socketModule": "./feeder"
+    }
+  ]
 }
