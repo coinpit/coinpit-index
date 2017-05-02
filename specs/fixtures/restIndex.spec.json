@@ -1,6 +1,60 @@
 [
   {
     "provider": {
+      "name":"bitfinex",
+      "url":"https://api.bitfinex.com/v1/pubticker/btcusd",
+      "path":["last_price"]
+    },
+    "body":{"mid":"1548.85","bid":"1548.7","ask":"1549.0","last_price":"1548.8","low":"1450.0","high":"1560.0","volume":"21517.46458204","timestamp":"1493694551.593302907"},
+    "price":1548.8
+  },
+  {
+    "provider": {
+      "name":"bitstamp",
+      "url":"https://www.bitstamp.net/api/v2/ticker/btcusd",
+      "path":["last"]
+    },
+    "body":{"high":"1425.00","last":"1412.60","timestamp":"1493694654","bid":"1412.60","vwap":"1389.47","volume":"8409.97302510","low":"1345.00","ask":"1413.17","open":"1390.86"},
+    "price":1412.6
+  },
+  {
+    "provider": {
+      "name":"okcoin",
+      "url":"https://www.okcoin.com/api/v1/ticker.do?symbol=btc_usd",
+      "path":["ticker","last"]
+    },
+    "body":{"date":"1493694658","ticker":{"buy":"1379.61","high":"1384.19","last":"1380.0","low":"1308.48","sell":"1380.0","vol":"3927.967"}},
+    "price":1380
+  },
+  {
+    "provider": {
+      "name":"gdax",
+      "url":"https://api.gdax.com/products/BTC-USD/ticker",
+      "path":["price"]
+    },
+    "body":{"trade_id":14762516,"price":"1443.73000000","size":"0.01336785","bid":"1443.73","ask":"1443.74","volume":"15846.99809155","time":"2017-05-02T03:18:39.436000Z"},
+    "price":1443.73
+  },
+  {
+    "provider": {
+      "name":"gemini",
+      "url":"https://api.gemini.com/v1/pubticker/btcusd",
+      "path":["last"]
+    },
+    "body":{"bid":"1446.90","ask":"1446.91","volume":{"BTC":"19982.1644566824","USD":"28800817.623641682728","timestamp":1493694600000},"last":"1446.91"},
+    "price":1446.91
+  },
+  {
+    "provider": {
+      "name":"quoine",
+      "url":"https://api.quoine.com/executions?product_id=1&limit=1",
+      "path":["models","0","price"]
+    },
+    "body":{"models":[{"id":8533282,"quantity":2.978,"price":1408,"taker_side":"sell","created_at":1493694312}],"current_page":1},
+    "price":1408
+  },
+  {
+    "provider": {
       "name": "kraken",
       "url":      "https://api.kraken.com/0/public/Ticker?pair=XBTUSD",
       "path":     ["result", "XXBTZUSD", "c", "0"]

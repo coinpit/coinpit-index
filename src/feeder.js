@@ -24,8 +24,10 @@ module.exports = function (name) {
     price        = price - 0
     if(!price || isNaN(price)) return util.log(name, " invalid price ", price)
     feed = {
+      type: "socket",
+      name: name,
       price: price,
-      time:Date.now()
+      time: Date.now()
     }
     emitter.emit('price', feed)
     feeder.resetClockToClearPrice()

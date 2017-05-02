@@ -10,7 +10,9 @@
   "components":[
     {
       "name":"mock1",
-      "socketModule": "./feeder"
+      "socketModule": "./feeder",
+      "url": "https://api.example.com",
+      "path": ["last_price"]
     }
   ]
 }
