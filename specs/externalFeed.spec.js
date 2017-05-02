@@ -18,7 +18,7 @@ describe('External Feed test', function () {
   beforeEach(function () {
     mocksock.mock()
     clock = sinon.useFakeTimers();
-    feed = require("../src/index.core")(config)
+    feed  = require("../src/index.core")(config)
   })
 
   afterEach(function () {
@@ -38,20 +38,24 @@ describe('External Feed test', function () {
                               price       : 10.2,
                               lastProvider: 'mock1',
                               used        : 1,
-                              providers   : [ { "name": "mock1", "type": "socket", price: 10.2, time: 0 } ]
+                              providers   : [{ "name": "mock1", "type": "socket", price: 10.2, time: 0 }]
                             })
   })
 
-  it.skip('feed expired', function* () {
+  it('feed expired', function (done) {
     feed.components['mock1'].priceReceived(10.2)
     clock.tick(config.expiryTime * MINUTE + config.startupDelay + 1)
-    yield bluebird.delay(1)
-    var index = feed.getIndex()
-    expect(index).to.be.eql({
-                              "lastProvider": "mock1",
-                              price         : undefined,
-                              "providers"   : [ { "name": "mock1", "type": "socket", "expired": true, "price": 10.2, "time": 0 } ],
-                              "used"        : 0
-                            })
+    bluebird.delay(1).then(function () {
+      var index = feed.getIndex()
+      expect(index).to.be.eql(
+        {
+          "lastProvider": "mock1",
+          price         : undefined,
+          "providers"   : [{ "name": "mock1", "type": "socket", "expired": true, "price": 10.2, "time": 0 }],
+          "used"        : 0
+        })
+      done()
+    }).catch(done)
+    clock.tick(100)
   })
 })

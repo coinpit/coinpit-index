@@ -8,7 +8,7 @@ module.exports = (function(name) {
   price.getPrice = function() {
     if(socketPrice && !socketPrice.expired) return socketPrice
     if(restPrice && !restPrice.expired) return restPrice
-    return undefined
+    return socketPrice ? socketPrice : restPrice
   }
 
   price.setSocketPrice = function(data) {

@@ -3,6 +3,7 @@ module.exports = function (name) {
   var config   = require('config')
   var Emitter  = require('events').EventEmitter;
   var emitter  = new Emitter();
+  var _        = require('lodash')
   var feeder   = {}
   var lastTime = Date.now()
   feeder.on    = emitter.on.bind(emitter)
@@ -21,19 +22,20 @@ module.exports = function (name) {
   }
 
   feeder.priceReceived = function (price) {
-    price        = price - 0
-    if(!price || isNaN(price)) return util.log(name, " invalid price ", price)
+    price = price - 0
+    if (!price || isNaN(price)) return util.log(name, " invalid price ", price)
     feed = {
-      type: "socket",
-      name: name,
+      type : "socket",
+      name : name,
       price: price,
-      time: Date.now()
+      time : Date.now()
     }
     emitter.emit('price', feed)
     feeder.resetClockToClearPrice()
   }
 
   feeder.clearPrice = function () {
+    feed         = _.cloneDeep(feed)
     feed.expired = true
     util.log('clearPrice', feed)
     emitter.emit('price', feed)

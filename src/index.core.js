@@ -62,7 +62,7 @@ module.exports = function (config) {
     var minExternalProviders = config.minExternalProviders || 1
     var unExpired = list.filter(x => !x.expired)
     var price = unExpired.length < minExternalProviders ? undefined : median(unExpired.map(x=>x.price)).toFixed(config.ticksize) - 0
-    priceIndex     = { price: price, lastProvider: feedProvider, used: list.length, providers: list }
+    priceIndex     = { price: price, lastProvider: feedProvider, used: unExpired.length, providers: list }
     if (config.logExternalPrice) util.log('coinpit-index:', prettyPrint(priceIndex))
     if (io) io.emit(TOPIC, priceIndex)
   }
