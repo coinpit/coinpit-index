@@ -5,24 +5,26 @@ var util     = require('util')
 var bluebird = require('bluebird')
 var Emitter  = require('events').EventEmitter
 var _        = require('lodash')
+var config   = require('config')
 
 module.exports = function (restProvider) {
   var DEFAULT_FREQUENCY = 1000
-  var MINUTE = 60 * 1000
-  var index = _.assign({}, restProvider)
+  var MINUTE            = 60 * 1000
+  var index             = _.assign({}, restProvider)
   affirm(index.url && url.parse(index.url), 'Invalid provider url')
   affirm(index.path && Array.isArray(index.path), 'path must be an array')
+  affirm(restProvider.name, 'rest provider name is not defined')
 
-  var emitter  = new Emitter()
+  var emitter = new Emitter()
   var restPrice
 
-  index.on = emitter.on.bind(emitter)
+  index.on   = emitter.on.bind(emitter)
   index.once = emitter.once.bind(emitter)
 
   index.getPrice = bluebird.coroutine(function*() {
     var response
     try {
-      response = yield rest.get(index.url, { 'User-Agent': 'restjs'})
+      response = yield rest.get(index.url, { 'User-Agent': 'restjs' })
       affirm(response && response.body, 'Invalid response: ' + response.statusCode)
       var data = response.body
       if (typeof data === 'string') data = JSON.parse(data)
@@ -33,8 +35,8 @@ module.exports = function (restProvider) {
       return price
     } catch (e) {
       util.log(response && response.statusCode, restProvider.name, e.stack)
-      if(!restPrice) return undefined
-      if(Date.now() - restPrice.time > restProvider.expiryTime * MINUTE) {
+      if (!restPrice || !restPrice.time) return undefined
+      if (Date.now() - restPrice.time > config.expiryTime * MINUTE) {
         restPrice.expired = true
       }
       return restPrice
